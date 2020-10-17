@@ -1,80 +1,87 @@
 ﻿using System;
 
-namespace TH2B2
+namespace ConsoleApp5
 {
     class PS
     {
         private int ts, ms;
         public PS()
         {
-            ts = 0;
-            ms = 1;
+            ts = ms = 0;
         }
-        public PS(int ts, int ms)
+        public PS(int x, int y)
         {
             this.ts = ts;
             this.ms = ms;
         }
-        public void Nhap()
+        public void nhap()
         {
-            Console.Write("Nhap tu so:");
-            ts = int.Parse(Console.ReadLine());
-            Console.Write("Nhap mau so:");
-            ms = int.Parse(Console.ReadLine());
+            Console.WriteLine("nhap tu"); ts = int.Parse(Console.ReadLine());
+            Console.WriteLine("nhap mau"); ms = int.Parse(Console.ReadLine());
         }
-        public void Hien()
+        public void hien()
         {
             if (ms == 1)
+            {
                 Console.WriteLine("{0}", ts);
+            }
             else
+            {
                 Console.WriteLine("{0}/{1}", ts, ms);
+            }
         }
-        public int  USCLN(int x, int y)
+        public int Uscln(int x, int y)
         {
-            x = Math.Abs(x);
-            y = Math.Abs(y);
+            x = Math.Abs(x); y = Math.Abs(y);
             while (x != y)
             {
                 if (x > y) x = x - y;
-                if (x < y) y = y - x;
+                if (y > x) y = y - x;
             }
             return x;
         }
-        public PS Rutgon()
+        public PS rutgon()
         {
-            int uc = USCLN(this.ts, this.ms);
+            int uc = Uscln(this.ts, this.ms);
             this.ts = this.ts / uc;
             this.ms = this.ms / uc;
             return this;
         }
-        public PS Tong(PS t2)
+        public static PS operator +(PS t1, PS t2)
         {
             PS t = new PS();
-            t.ts = this.ts * t2.ms + this.ms * t2.ms;
-            t.ms = this.ms * t2.ms;
-            return t.Rutgon();
+            t.ts = t1.ts * t2.ms + t1.ms * t2.ts;
+            t.ms = t1.ms * t2.ms;
+            return t;
         }
-        public PS Hieu(PS t2)
+        public static PS operator -(PS t1, PS t2)
         {
             PS t = new PS();
-            t.ts = this.ts * t2.ms - this.ms * t2.ms;
-            t.ms = this.ms * t2.ms;
-            return t.Rutgon();
+            t.ts = t1.ts * t2.ms - t1.ms * t2.ts;
+            t.ms = t1.ms * t2.ms;
+            return t;
         }
-        public PS Tich(PS t2)
+        public static PS operator /(PS t1, PS t2)
         {
             PS t = new PS();
-            t.ts = this.ts * t2.ts;
-            t.ms = this.ms * t2.ms;
-            return t.Rutgon();
+            t.ts = t1.ts * t2.ms;
+            t.ms = t1.ms * t2.ts;
+            return t;
         }
-        public PS Thuong(PS t2)
+        public static PS operator *(PS t1, PS t2)
         {
             PS t = new PS();
-            t.ts = this.ts * t2.ms;
-            t.ms = this.ms * t2.ts;
-            return t.Rutgon();
+            t.ts = t1.ts * t2.ts;
+            t.ms = t1.ms * t2.ms;
+            return t;
         }
-        
+        public static bool operator >(PS t1, PS t2)
+        {
+            return t1.ts * t2.ms > t2.ts * t1.ms;
+        }
+        public static bool operator <(PS t1, PS t2)
+        {
+            return t1.ts * t2.ms < t2.ts * t1.ms;
+        }
     }
 }
